@@ -2,10 +2,10 @@ import Config
 
 # Configure your database
 config :invarc, Invarc.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: "pg",
+  password: "pg",
   hostname: "localhost",
-  database: "invarc_dev",
+  database: "invarc-pg",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10

@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+
+  postgres:
+    image: 'postgres:14.2'
+    container_name: 'invarc-pg'
+    ports:
+      - "5432:5432"
+    restart: always
+    environment:
+      POSTGRES_USER: pg
+      POSTGRES_PASSWORD: pg
+      POSTGRES_DB: invarc-pg

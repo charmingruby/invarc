@@ -6,10 +6,10 @@ import Config
 # to provide built-in test partitioning in CI environment.
 # Run `mix help test` for more information.
 config :invarc, Invarc.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: "pg",
+  password: "pg",
   hostname: "localhost",
-  database: "invarc_test#{System.get_env("MIX_TEST_PARTITION")}",
+  database: "invarc-pg#{System.get_env("MIX_TEST_PARTITION")}",
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: 10
 
