@@ -1,6 +1,8 @@
 defmodule Invarc.Investments.Model.Investment do
   @moduledoc "Investment model"
 
+  alias Invarc.Investments.Model.{InvestmentCategory, Transaction, Wallet}
+
   import Ecto.Changeset
 
   use Ecto.Schema
@@ -9,7 +11,7 @@ defmodule Invarc.Investments.Model.Investment do
   @required ~w(name description source initial_value)a
 
   @primary_key {:id, :binary_id, autogenerate: true}
-  schema "investments" do
+  schema "investment" do
     field :name, :string
     field :description, :string
     field :source, :string
@@ -17,6 +19,10 @@ defmodule Invarc.Investments.Model.Investment do
     field :resultant_value, :integer
 
     # relationships
+    belongs_to :category, InvestmentCategory, type: :binary_id
+    belongs_to :wallet, Wallet, type: :binary_id
+
+    has_many :transactions, Transaction
 
     timestamps()
   end

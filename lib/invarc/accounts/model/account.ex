@@ -1,6 +1,8 @@
 defmodule Invarc.Accounts.Model.Account do
   @moduledoc "Account model"
 
+  alias Invarc.Investments.Model.{InvestmentCategory, Wallet}
+
   import Ecto.Changeset
 
   use Ecto.Schema
@@ -9,7 +11,7 @@ defmodule Invarc.Accounts.Model.Account do
   @required ~w(name email password)a
 
   @primary_key {:id, :binary_id, autogenerate: true}
-  schema "accounts" do
+  schema "account" do
     field :name, :string
     field :email, :string
     field :password, :string
@@ -17,6 +19,8 @@ defmodule Invarc.Accounts.Model.Account do
     field :plan, :string
 
     # relationships
+    has_many :wallets, Wallet
+    has_many :investment_categories, InvestmentCategory
 
     timestamps()
   end

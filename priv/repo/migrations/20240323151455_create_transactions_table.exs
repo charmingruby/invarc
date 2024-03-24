@@ -10,10 +10,8 @@ defmodule Invarc.Repo.Migrations.CreateTransactionsTable do
       add(:type, :string, null: false)
 
       # relationships
-      add(:wallet_receiver_id, references(:wallets, type: :uuid))
-      add(:wallet_sender_id, references(:wallets, type: :uuid))
-      add(:investment_receiver_id, references(:investments, type: :uuid))
-      add(:investment_sender_id, references(:investments, type: :uuid))
+      add(:wallet_id, references(:wallets, type: :uuid))
+      add(:investment_id, references(:investments, type: :uuid))
       add(:category_id, references(:investment_categories, type: :uuid))
 
       timestamps()
