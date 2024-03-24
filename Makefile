@@ -12,3 +12,10 @@ new-mig:
 .PHONY: run
 run:
 	mix phx.server
+
+###################
+# LINTING         #
+###################
+.PHONY: lint
+lint:
+	mix credo --strict
