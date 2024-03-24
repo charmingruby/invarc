@@ -27,3 +27,6 @@ invarc-*.tar
 
 # vscode
 .elixir_ls
+
+# localfiles
+todo
