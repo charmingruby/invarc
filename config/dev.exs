@@ -23,7 +23,7 @@ config :invarc, InvarcWeb.Endpoint,
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "EokL/2YQKr6cMbMAHkA+jO63anfAKtDTeYzQa+EYULyj78e1eywsLJTx0CoGkOWx",
+  secret_key_base: "5u8VVZ7AJ9xC6mTH5CnNoziH6RCGQHMTzSpErAl5FF3xMV8dhyyiKeT0zL004Sa3",
   watchers: []
 
 # ## SSL Support
@@ -61,3 +61,6 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
+
+# Disable swoosh api client as it is only required for production adapters.
+config :swoosh, :api_client, false

@@ -7,7 +7,7 @@ defmodule InvarcWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_invarc_key",
-    signing_salt: "yiwbcIeb",
+    signing_salt: "FR8AnDqu",
     same_site: "Lax"
   ]
 

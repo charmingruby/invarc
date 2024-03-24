@@ -14,6 +14,8 @@ defmodule Invarc.Application do
       Invarc.Repo,
       # Start the PubSub system
       {Phoenix.PubSub, name: Invarc.PubSub},
+      # Start Finch
+      {Finch, name: Invarc.Finch},
       # Start the Endpoint (http/https)
       InvarcWeb.Endpoint
       # Start a worker by calling: Invarc.Worker.start_link(arg)
