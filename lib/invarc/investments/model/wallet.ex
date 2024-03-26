@@ -3,7 +3,7 @@ defmodule Invarc.Investments.Models.Wallet do
 
   alias Invarc.Accounts.Models.Account
 
-  alias Invarc.Investments.Model.{
+  alias Invarc.Investments.Models.{
     Investment,
     Transaction
   }

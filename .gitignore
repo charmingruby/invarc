@@ -30,3 +30,6 @@ invarc-*.tar
 
 # localfiles
 todo
+
+# environment
+.env
