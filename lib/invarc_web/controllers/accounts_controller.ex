@@ -1,6 +1,10 @@
 defmodule InvarcWeb.AccountsController do
-  alias InvarcWeb.Helpers
   use InvarcWeb, :controller
+
+  alias Invarc.Accounts
+  alias InvarcWeb.Helpers
+
+  action_fallback InvarcWeb.FallbackController
 
   @register_params_schema %{
     name: [:string, required: true],
@@ -8,10 +12,11 @@ defmodule InvarcWeb.AccountsController do
     password: [:string, required: true]
   }
   def register(conn, params) do
-    with {:ok, casted_params} <- Helpers.Params.cast_params(params, @register_params_schema) do
+    with {:ok, casted_params} <- Helpers.Params.cast_params(params, @register_params_schema),
+         {:ok, account} <- Accounts.register(casted_params) do
       conn
       |> put_status(:created)
-      |> render(:account, account: casted_params)
+      |> render(:account, account: account)
     end
   end
 end

@@ -4,6 +4,15 @@ defmodule InvarcWeb.AccountsJSON do
   end
 
   defp build_account_data(account) do
-    IO.inspect(account)
+    %{
+      id: account.id,
+      name: account.name,
+      email: account.email,
+      password_hash: account.password_hash,
+      role: account.role,
+      plan: account.plan,
+      inserted_at: account.inserted_at,
+      updated_at: account.updated_at
+    }
   end
 end

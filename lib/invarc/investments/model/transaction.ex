@@ -1,7 +1,7 @@
-defmodule Invarc.Investments.Model.Transaction do
+defmodule Invarc.Investments.Models.Transaction do
   @moduledoc "Transaction model"
 
-  alias Invarc.Investments.Model.{
+  alias Invarc.Investments.Models.{
     Investment,
     InvestmentCategory,
     Wallet
@@ -15,7 +15,7 @@ defmodule Invarc.Investments.Model.Transaction do
   @required ~w(name amount status type)a
 
   @primary_key {:id, :binary_id, autogenerate: true}
-  schema "transaction" do
+  schema "transactions" do
     field :name, :string
     field :amount, :integer
     field :status, :string

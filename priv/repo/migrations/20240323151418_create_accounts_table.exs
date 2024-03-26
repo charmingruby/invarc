@@ -6,7 +6,7 @@ defmodule Invarc.Repo.Migrations.CreateAccountsTable do
       add(:id, :uuid, primary_key: true)
       add(:name, :string, null: false)
       add(:email, :string, null: false)
-      add(:password, :string, null: false)
+      add(:password_hash, :string, null: false)
       add(:role, :string, null: false)
       add(:plan, :string, null: false)
 

@@ -1,12 +1,12 @@
-defmodule Invarc.Investments.Model.Wallet do
+defmodule Invarc.Investments.Models.Wallet do
   @moduledoc "Wallet model"
+
+  alias Invarc.Accounts.Models.Account
 
   alias Invarc.Investments.Model.{
     Investment,
     Transaction
   }
-
-  alias Invarc.Accounts.Model.Account
 
   import Ecto.Changeset
 
@@ -16,7 +16,7 @@ defmodule Invarc.Investments.Model.Wallet do
   @required ~w(name current_balance recorde_balance total_money_applied)a
 
   @primary_key {:id, :binary_id, autogenerate: true}
-  schema "wallet" do
+  schema "wallets" do
     field :name, :string
     field :current_balance, :integer
     field :record_balance, :integer

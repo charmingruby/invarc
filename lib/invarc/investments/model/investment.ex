@@ -1,7 +1,7 @@
-defmodule Invarc.Investments.Model.Investment do
+defmodule Invarc.Investments.Models.Investment do
   @moduledoc "Investment model"
 
-  alias Invarc.Investments.Model.{InvestmentCategory, Transaction, Wallet}
+  alias Invarc.Investments.Models.{InvestmentCategory, Transaction, Wallet}
 
   import Ecto.Changeset
 
@@ -11,7 +11,7 @@ defmodule Invarc.Investments.Model.Investment do
   @required ~w(name description source initial_value)a
 
   @primary_key {:id, :binary_id, autogenerate: true}
-  schema "investment" do
+  schema "investments" do
     field :name, :string
     field :description, :string
     field :source, :string

@@ -1,9 +1,8 @@
-defmodule Invarc.Accounts.Model.Account do
+defmodule Invarc.Accounts.Models.Account do
   @moduledoc "Account model"
 
-  alias Invarc.Accounts.Model.Account
   alias Invarc.Common.Security
-  alias Invarc.Investments.Model.{InvestmentCategory, Wallet}
+  alias Invarc.Investments.Models.{InvestmentCategory, Wallet}
 
   import Ecto.Changeset
 
@@ -16,7 +15,7 @@ defmodule Invarc.Accounts.Model.Account do
   @valid_plans ~w(free premium)
 
   @primary_key {:id, :binary_id, autogenerate: true}
-  schema "account" do
+  schema "accounts" do
     field :name, :string
     field :email, :string
     field :password, :string, virtual: true
@@ -31,7 +30,7 @@ defmodule Invarc.Accounts.Model.Account do
     timestamps()
   end
 
-  def changeset(%Account{} = account, params) do
+  def changeset(%__MODULE__{} = account, params) do
     account
     |> cast(params, @fields)
     |> validate_required(@required)

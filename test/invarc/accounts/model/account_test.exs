@@ -1,7 +1,7 @@
 defmodule Invarc.Accounts.Model.AccountTest do
   use Invarc.DataCase, async: true
 
-  alias Invarc.Accounts.Model.Account
+  alias Invarc.Accounts.Models.Account
   alias Invarc.Common.Security
 
   describe "changeset/1" do
