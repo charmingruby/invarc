@@ -1,8 +1,12 @@
 defmodule Invarc.Accounts.UseCases.Register do
-  alias Invarc.Accounts.Loaders.AccountLoader
-  alias Invarc.Accounts.Mutators.AccountMutators
+  @moduledoc """
+  Register a new account use case
+  """
+
   alias Invarc.Accounts.Changesets.AccountChangesets
+  alias Invarc.Accounts.Loaders.AccountLoader
   alias Invarc.Accounts.Models.Account
+  alias Invarc.Accounts.Mutators.AccountMutators
 
   def call(%{email: email} = params) do
     case AccountLoader.one_by_email(email) do

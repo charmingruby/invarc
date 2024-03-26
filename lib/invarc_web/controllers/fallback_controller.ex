@@ -1,7 +1,7 @@
 defmodule InvarcWeb.FallbackController do
   use InvarcWeb, :controller
 
-  def call(conn, %Ecto.Changeset{} = changeset) do
+  def call(conn, {:error, %Ecto.Changeset{} = changeset}) do
     conn
     |> put_status(422)
     |> put_view(json: InvarcWeb.ErrorJSON)

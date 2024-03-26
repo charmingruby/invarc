@@ -1,6 +1,10 @@
 defmodule Invarc.Accounts.Loaders.AccountLoader do
-  alias Invarc.Repo
+  @moduledoc """
+  Module execute read queries
+  """
+
   alias Invarc.Accounts.Loaders.Queries.AccountQueries
+  alias Invarc.Repo
 
   def one_by_email(email) do
     result =

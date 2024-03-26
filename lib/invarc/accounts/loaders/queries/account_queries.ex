@@ -1,4 +1,8 @@
 defmodule Invarc.Accounts.Loaders.Queries.AccountQueries do
+  @moduledoc """
+  Module to deal with database read queries
+  """
+
   import Ecto.Query
 
   alias Invarc.Accounts.Models.Account

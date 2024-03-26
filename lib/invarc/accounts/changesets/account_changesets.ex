@@ -1,4 +1,8 @@
 defmodule Invarc.Accounts.Changesets.AccountChangesets do
+  @moduledoc """
+  Module to deal with accounts changeset validations
+  """
+
   alias Invarc.Accounts.Models.Account
   alias Invarc.Common.Security
 
