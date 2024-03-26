@@ -1,4 +1,8 @@
 defmodule Invarc.Common.Security do
+  @moduledoc """
+  Security module to deal with hashes along the application
+  """
+
   def hash(value) when is_binary(value) do
     Argon2.hash_pwd_salt(value)
   end

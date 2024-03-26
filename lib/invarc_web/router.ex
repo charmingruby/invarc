@@ -1,13 +1,9 @@
 defmodule InvarcWeb.Router do
   use InvarcWeb, :router
 
-  pipeline :api do
-    plug :accepts, ["json"]
-  end
+  alias InvarcWeb.Routers.AccountsRouter
 
-  scope "/api", InvarcWeb do
-    pipe_through :api
-  end
+  forward "/api/accounts", AccountsRouter
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:invarc, :dev_routes) do

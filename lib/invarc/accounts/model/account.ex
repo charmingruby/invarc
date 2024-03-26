@@ -1,8 +1,8 @@
 defmodule Invarc.Accounts.Model.Account do
   @moduledoc "Account model"
 
-  alias Invarc.Common.Security
   alias Invarc.Accounts.Model.Account
+  alias Invarc.Common.Security
   alias Invarc.Investments.Model.{InvestmentCategory, Wallet}
 
   import Ecto.Changeset

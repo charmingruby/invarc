@@ -5,7 +5,6 @@
 new-mig:
 	mix ecto.gen.migration $(NAME)
 
-
 ###################
 # SERVER          #
 ###################
