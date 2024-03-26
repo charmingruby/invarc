@@ -1,6 +1,7 @@
 defmodule Invarc.Accounts.Model.Account do
   @moduledoc "Account model"
 
+  alias Invarc.Common.Security
   alias Invarc.Accounts.Model.Account
   alias Invarc.Investments.Model.{InvestmentCategory, Wallet}
 
@@ -18,7 +19,8 @@ defmodule Invarc.Accounts.Model.Account do
   schema "account" do
     field :name, :string
     field :email, :string
-    field :password, :string
+    field :password, :string, virtual: true
+    field :password_hash, :string
     field :role, :string
     field :plan, :string
 
@@ -39,7 +41,16 @@ defmodule Invarc.Accounts.Model.Account do
 
   defp validate_rules(changeset) do
     changeset
+    |> validate_length(:name, min: 3, max: 32)
+    |> validate_format(:email, ~r/^[A-Za-z0-9\._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$/)
+    |> validate_length(:password, min: 8, max: 16)
     |> validate_inclusion(:plan, @valid_plans)
     |> validate_inclusion(:role, @valid_roles)
   end
+
+  def hash_password(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
+    change(changeset, password_hash: Security.hash(password))
+  end
+
+  def hash_password(changeset), do: changeset
 end

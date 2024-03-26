@@ -2,12 +2,13 @@ defmodule Invarc.Accounts.Model.AccountTest do
   use Invarc.DataCase, async: true
 
   alias Invarc.Accounts.Model.Account
+  alias Invarc.Common.Security
 
   describe "changeset/1" do
     @invalid_account_params %{
-      name: 123,
-      email: nil,
-      password: 123,
+      name: "du",
+      email: "dummy_email",
+      password: "1234567",
       plan: "not a plan",
       role: "not a role"
     }
@@ -69,6 +70,45 @@ defmodule Invarc.Accounts.Model.AccountTest do
       refute errors_on(changeset)[:password]
       refute errors_on(changeset)[:plan]
       refute errors_on(changeset)[:role]
+    end
+  end
+
+  describe "hash_password/1" do
+    @valid_account %Account{
+      name: "dummy",
+      email: "dummy@example.com",
+      password: "12345678",
+      plan: "premium",
+      role: "manager"
+    }
+
+    test "should be able to validate the password hash from the valid password" do
+      password_to_verify = "dummy_password"
+
+      changeset =
+        Account.changeset(@valid_account, %{password: password_to_verify})
+        |> Account.hash_password()
+
+      %Ecto.Changeset{changes: %{password_hash: password_hash_to_verify}} = changeset
+
+      is_password_valid = Security.verify_hash(password_to_verify, password_hash_to_verify)
+
+      assert is_password_valid == true
+    end
+
+    test "should not be able to validate the password hash from an invalid password" do
+      valid_password = "dummy_password"
+
+      changeset =
+        Account.changeset(@valid_account, %{password: valid_password})
+        |> Account.hash_password()
+
+      %Ecto.Changeset{changes: %{password_hash: password_hash_to_verify}} = changeset
+
+      is_password_valid =
+        Security.verify_hash("not valid", password_hash_to_verify)
+
+      assert is_password_valid == false
     end
   end
 end
