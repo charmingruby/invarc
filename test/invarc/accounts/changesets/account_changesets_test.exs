@@ -1,10 +1,11 @@
-defmodule Invarc.Accounts.Model.AccountTest do
+defmodule Invarc.Accounts.Changesets.AccountChangesetsTest do
   use Invarc.DataCase, async: true
 
+  alias Invarc.Accounts.Changesets.AccountChangesets
   alias Invarc.Accounts.Models.Account
   alias Invarc.Common.Security
 
-  describe "changeset/1" do
+  describe "build/2" do
     @invalid_account_params %{
       name: "du",
       email: "dummy_email",
@@ -29,7 +30,7 @@ defmodule Invarc.Accounts.Model.AccountTest do
     }
 
     test "should return an error changeset with invalid params" do
-      changeset = Account.changeset(%Account{}, @invalid_account_params)
+      changeset = AccountChangesets.build(%Account{}, @invalid_account_params)
 
       assert %Ecto.Changeset{valid?: false} = changeset
       assert errors_on(changeset)[:name]
@@ -40,7 +41,7 @@ defmodule Invarc.Accounts.Model.AccountTest do
     end
 
     test "should return an error changeset with missing required params" do
-      changeset = Account.changeset(%Account{}, @missing_required_params)
+      changeset = AccountChangesets.build(%Account{}, @missing_required_params)
 
       assert %Ecto.Changeset{valid?: false} = changeset
       assert errors_on(changeset)[:name]
@@ -49,7 +50,7 @@ defmodule Invarc.Accounts.Model.AccountTest do
     end
 
     test "should return a valid changeset on valid params" do
-      changeset = Account.changeset(%Account{}, @valid_params)
+      changeset = AccountChangesets.build(%Account{}, @valid_params)
 
       assert %Ecto.Changeset{valid?: true} = changeset
       refute errors_on(changeset)[:name]
@@ -60,7 +61,7 @@ defmodule Invarc.Accounts.Model.AccountTest do
     end
 
     test "should return a valid changeset with new values on new changes" do
-      changeset = Account.changeset(@valid_account, @valid_params)
+      changeset = AccountChangesets.build(@valid_account, @valid_params)
 
       assert %Ecto.Changeset{valid?: true} = changeset
       assert @valid_params.plan == changeset.changes[:plan]
@@ -86,8 +87,8 @@ defmodule Invarc.Accounts.Model.AccountTest do
       password_to_verify = "dummy_password"
 
       changeset =
-        Account.changeset(@valid_account, %{password: password_to_verify})
-        |> Account.hash_password()
+        AccountChangesets.build(@valid_account, %{password: password_to_verify})
+        |> AccountChangesets.hash_password()
 
       %Ecto.Changeset{changes: %{password_hash: password_hash_to_verify}} = changeset
 
@@ -100,8 +101,8 @@ defmodule Invarc.Accounts.Model.AccountTest do
       valid_password = "dummy_password"
 
       changeset =
-        Account.changeset(@valid_account, %{password: valid_password})
-        |> Account.hash_password()
+        AccountChangesets.build(@valid_account, %{password: valid_password})
+        |> AccountChangesets.hash_password()
 
       %Ecto.Changeset{changes: %{password_hash: password_hash_to_verify}} = changeset
 
