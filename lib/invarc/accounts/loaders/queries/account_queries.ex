@@ -13,4 +13,9 @@ defmodule Invarc.Accounts.Loaders.Queries.AccountQueries do
     from acc in all(),
       where: acc.email == ^email
   end
+
+  def one_by_id(id) do
+    from acc in all(),
+      where: acc.id == ^id
+  end
 end

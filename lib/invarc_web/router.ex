@@ -2,8 +2,10 @@ defmodule InvarcWeb.Router do
   use InvarcWeb, :router
 
   alias InvarcWeb.Routers.AccountsRouter
+  alias InvarcWeb.Routers.SessionsRouter
 
   forward "/api/accounts", AccountsRouter
+  forward "/api/sessions", SessionsRouter
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:invarc, :dev_routes) do

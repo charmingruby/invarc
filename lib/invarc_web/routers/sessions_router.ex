@@ -1,6 +1,6 @@
-defmodule InvarcWeb.Routers.AccountsRouter do
+defmodule InvarcWeb.Routers.SessionsRouter do
   @moduledoc """
-  Route groups for "/api/accounts
+  Routes groups for "/api/sessions
   """
 
   use InvarcWeb, :router
@@ -12,6 +12,6 @@ defmodule InvarcWeb.Routers.AccountsRouter do
   scope "/", InvarcWeb do
     pipe_through :api
 
-    post "/", AccountsController, :register
+    post "/", SessionsController, :authenticate
   end
 end

@@ -45,6 +45,9 @@ defmodule Invarc.MixProject do
       {:jason, "~> 1.2"},
       {:tarams, "~> 1.0.0"},
       {:plug_cowboy, "~> 2.5"},
+      {:guardian, "~> 2.0"},
+
+      # dev test
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
     ]
   end

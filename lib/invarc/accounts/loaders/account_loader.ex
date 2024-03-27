@@ -17,4 +17,16 @@ defmodule Invarc.Accounts.Loaders.AccountLoader do
       account -> {:ok, account}
     end
   end
+
+  def one_by_id(id) do
+    result =
+      id
+      |> AccountQueries.one_by_id()
+      |> Repo.one()
+
+    case result do
+      nil -> {:error, :not_found}
+      account -> {:ok, account}
+    end
+  end
 end

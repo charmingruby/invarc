@@ -11,6 +11,10 @@ config :invarc,
   ecto_repos: [Invarc.Repo],
   generators: [binary_id: true]
 
+config :invarc, InvarcWeb.Security.Guardian,
+  issuer: "invarc",
+  secret_key: "OU2cm0zcynVBGikJqLPiOqiidkEH4zF5Os1VGbRMJ4jpuTikL5gc6IoWfxGRNVfw"
+
 # Configures the endpoint
 config :invarc, InvarcWeb.Endpoint,
   url: [host: "localhost"],

@@ -3,7 +3,8 @@ defmodule Invarc.Accounts do
   Centralizes accounts use cases
   """
 
-  alias Invarc.Accounts
+  alias Invarc.Accounts.UseCases
 
-  defdelegate register(params), to: Accounts.UseCases.Register, as: :call
+  defdelegate register(params), to: UseCases.Register, as: :call
+  defdelegate authenticate(params), to: UseCases.Authenticate, as: :call
 end
