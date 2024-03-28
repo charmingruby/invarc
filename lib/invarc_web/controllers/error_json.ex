@@ -16,12 +16,27 @@ defmodule InvarcWeb.ErrorJSON do
   def error(%{status: :invalid_credentials}) do
     %{
       status: :unauthorized,
-      message: "Invalid credentials"
+      message: "invalid credentials"
     }
   end
 
-  def error(%{changeset: changeset}) do
+  def error(%{error: %{status: :not_found, entity: entity}}) do
     %{
+      status: :not_found,
+      message: "#{entity} not found"
+    }
+  end
+
+  def error(%{error: %{status: :bad_request, params: params}}) do
+    %{
+      status: :bad_request,
+      errors: params
+    }
+  end
+
+  def error(%{error: %{status: :unprocessable_entity, changeset: changeset}}) do
+    %{
+      status: :unprocessable_entity,
       errors: Ecto.Changeset.traverse_errors(changeset, &translate_errors/1)
     }
   end

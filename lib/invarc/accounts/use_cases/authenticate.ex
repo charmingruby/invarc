@@ -7,7 +7,7 @@ defmodule Invarc.Accounts.UseCases.Authenticate do
 
   def call(%{email: email, password: password}) do
     case AccountLoader.one_by_email(email) do
-      {:error, :not_found} = err -> err
+      {:error, :not_found} -> {:error, :invalid_credentials}
       {:ok, account} -> handle_verify_account_credentials(%{account: account, password: password})
     end
   end

@@ -6,8 +6,8 @@ POST {{baseUrl}}/accounts
 Content-Type: application/json
 
 {
-	"name": "john doe",
-	"email": "johndoe@example.com",
+	"name": "dummy",
+	"email": "dummy@example.com",
 	"password": "password123"
 }
 
@@ -18,7 +18,7 @@ POST {{baseUrl}}/sessions
 Content-Type: application/json
 
 {
-	"email": "johndoe@example.com",
+	"email": "dummy@example.com",
 	"password": "password123"
 }
 
@@ -27,5 +27,5 @@ Content-Type: application/json
 # @name create_wallet
 POST {{baseUrl}}/wallets
 Content-Type: application/json
-Authorization:	
+Authorization:	Bearer {{accessToken}}
 
