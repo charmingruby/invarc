@@ -1,4 +1,8 @@
 defmodule InvarcWeb.Security.Guardian do
+  @moduledoc """
+  Guardian module setup
+  """
+
   use Guardian, otp_app: :invarc
 
   alias Invarc.Accounts.Loaders.AccountLoader

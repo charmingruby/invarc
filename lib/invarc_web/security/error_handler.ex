@@ -1,4 +1,8 @@
 defmodule InvarcWeb.Security.ErrorHandler do
+  @moduledoc """
+  Authentication plugs error handler
+  """
+
   alias Guardian.Plug.ErrorHandler
   alias Plug.Conn
   @behaviour ErrorHandler

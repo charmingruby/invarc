@@ -1,6 +1,9 @@
 defmodule Invarc.Accounts.UseCases.Authenticate do
-  alias Invarc.Common.Security
-  alias Invarc.Accounts.Loaders.AccountLoader
+  @moduledoc """
+  Authentication use case
+  """
+
+  alias Invarc.{Accounts.Loaders.AccountLoader, Common.Security}
 
   def call(%{email: email, password: password}) do
     case AccountLoader.one_by_email(email) do
