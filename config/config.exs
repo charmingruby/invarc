@@ -15,6 +15,10 @@ config :invarc, InvarcWeb.Security.Guardian,
   issuer: "invarc",
   secret_key: "OU2cm0zcynVBGikJqLPiOqiidkEH4zF5Os1VGbRMJ4jpuTikL5gc6IoWfxGRNVfw"
 
+config :invarc, InvarcWeb.Security.Pipelines.Protected,
+  module: InvarcWeb.Security.Guardian,
+  error_handler: InvarcWeb.Security.ErrorHandler
+
 # Configures the endpoint
 config :invarc, InvarcWeb.Endpoint,
   url: [host: "localhost"],

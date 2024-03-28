@@ -5,7 +5,7 @@ defmodule InvarcWeb.Security.Guardian do
   alias Invarc.Accounts.Models.Account
 
   # 7 days
-  @access_token_time 60 * 60 * 24 * 7
+  @access_token_time 60 * 24 * 7
 
   def subject_for_token(%Account{id: id}, _claims), do: {:ok, id}
 

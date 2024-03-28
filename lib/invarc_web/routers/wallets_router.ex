@@ -2,6 +2,7 @@ defmodule InvarcWeb.Routers.WalletsRouter do
   @moduledoc """
   Routes groups for "/api/wallets
   """
+  alias InvarcWeb.Security.Pipelines
 
   use InvarcWeb, :router
 
@@ -9,9 +10,13 @@ defmodule InvarcWeb.Routers.WalletsRouter do
     plug :accepts, ["json"]
   end
 
-  scope "/", InvarcWeb do
-    pipe_through :api
+  pipeline :auth do
+    plug Pipelines.Protected
+  end
 
-    post "/", SessionsController, :authenticate
+  scope "/", InvarcWeb do
+    pipe_through [:api, :auth]
+
+    post "/", WalletsController, :create_wallet
   end
 end
