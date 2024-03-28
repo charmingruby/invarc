@@ -9,6 +9,6 @@ services:
       - "5432:5432"
     restart: always
     environment:
-      POSTGRES_USER: pg
-      POSTGRES_PASSWORD: pg
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
       POSTGRES_DB: invarc-pg

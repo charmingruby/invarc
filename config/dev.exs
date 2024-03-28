@@ -2,8 +2,8 @@ import Config
 
 # Configure your database
 config :invarc, Invarc.Repo,
-  username: "pg",
-  password: "pg",
+  username: "postgres",
+  password: "postgres",
   hostname: "localhost",
   database: "invarc-pg",
   stacktrace: true,
