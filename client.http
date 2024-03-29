@@ -29,3 +29,7 @@ POST {{baseUrl}}/wallets
 Content-Type: application/json
 Authorization:	Bearer {{accessToken}}
 
+{
+	"name": "dummy name"
+}
+

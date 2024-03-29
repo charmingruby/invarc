@@ -3,10 +3,10 @@ defmodule Invarc.Accounts.UseCases.Authenticate do
   Authentication use case
   """
 
-  alias Invarc.{Accounts.Loaders.AccountLoader, Common.Security}
+  alias Invarc.{Accounts.Loaders.AccountLoaders, Common.Security}
 
   def call(%{email: email, password: password}) do
-    case AccountLoader.one_by_email(email) do
+    case AccountLoaders.one_by_email(email) do
       {:error, :not_found} -> {:error, :invalid_credentials}
       {:ok, account} -> handle_verify_account_credentials(%{account: account, password: password})
     end

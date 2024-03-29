@@ -5,7 +5,7 @@ defmodule InvarcWeb.Security.Guardian do
 
   use Guardian, otp_app: :invarc
 
-  alias Invarc.Accounts.Loaders.AccountLoader
+  alias Invarc.Accounts.Loaders.AccountLoaders
   alias Invarc.Accounts.Models.Account
 
   # 7 days
@@ -16,7 +16,7 @@ defmodule InvarcWeb.Security.Guardian do
   def resource_from_claims(claims) do
     claims
     |> Map.get("sub")
-    |> AccountLoader.one_by_id()
+    |> AccountLoaders.one_by_id()
   end
 
   def generate_token(account) do

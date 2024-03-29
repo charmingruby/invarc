@@ -1,5 +1,10 @@
 defmodule InvarcWeb.Helpers.Connection do
+  @moduledoc """
+  Helper function to handle with connection
+  """
+
   alias InvarcWeb.Security.Guardian
+
   import Plug.Conn
 
   def retrieve_token_payload(conn) do

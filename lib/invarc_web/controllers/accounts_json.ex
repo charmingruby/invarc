@@ -1,18 +1,7 @@
 defmodule InvarcWeb.AccountsJSON do
-  def account(%{account: account}) do
-    build_account_data(account)
-  end
+  alias InvarcWeb.Presenters.AccountsPresenter
 
-  defp build_account_data(account) do
-    %{
-      id: account.id,
-      name: account.name,
-      email: account.email,
-      password_hash: account.password_hash,
-      role: account.role,
-      plan: account.plan,
-      inserted_at: account.inserted_at,
-      updated_at: account.updated_at
-    }
+  def account(%{account: account}) do
+    AccountsPresenter.build_default_account(account)
   end
 end

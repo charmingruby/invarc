@@ -1,11 +1,11 @@
 defmodule Invarc.Accounts.Mutators.AccountMutators do
   @moduledoc """
-  Module to deal with database write operations
+  Module to handle with database accounts write operations
   """
 
   alias Invarc.Repo
 
-  def create(account) do
+  def create(%Ecto.Changeset{} = account) do
     Repo.insert(account)
   end
 end

@@ -1,5 +1,6 @@
 defmodule InvarcWeb.FallbackController do
   use InvarcWeb, :controller
+
   # -
   # Changeset errors
   # -
@@ -47,12 +48,26 @@ defmodule InvarcWeb.FallbackController do
   end
 
   # -
+  # Conflict errors
+  # -
+  def call(conn, {:error, {:conflict, field}}) do
+    err = %{status: :conflict, field: field}
+
+    conn
+    |> put_status(:conflict)
+    |> put_view(json: InvarcWeb.ErrorJSON)
+    |> render(:error, error: err)
+  end
+
+  # -
   # Not handled error
   # -
   def call(conn, {:error, reason}) do
+    err = %{status: :internal_server_error, reason: reason}
+
     conn
     |> put_status(500)
     |> put_view(json: InvarcWeb.ErrorJSON)
-    |> render(:error, reason: reason)
+    |> render(:error, error: err)
   end
 end

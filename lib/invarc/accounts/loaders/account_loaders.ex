@@ -1,6 +1,6 @@
-defmodule Invarc.Accounts.Loaders.AccountLoader do
+defmodule Invarc.Accounts.Loaders.AccountLoaders do
   @moduledoc """
-  Module execute read queries
+  Module to execute accounts read queries
   """
 
   alias Invarc.Accounts.Loaders.Queries.AccountQueries

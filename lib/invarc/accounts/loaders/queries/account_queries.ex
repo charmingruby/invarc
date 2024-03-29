@@ -1,6 +1,6 @@
 defmodule Invarc.Accounts.Loaders.Queries.AccountQueries do
   @moduledoc """
-  Module to deal with database read queries
+  Module with account read queries
   """
 
   import Ecto.Query

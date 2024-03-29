@@ -18,3 +18,16 @@ run:
 .PHONY: lint
 lint:
 	mix credo --strict
+
+###################
+# TEST            #
+###################
+.PHONY: test
+test:
+	mix test
+
+###################
+# CHECK UP        #
+###################
+.PHONY: checkup
+checkup: lint test

@@ -13,9 +13,10 @@ defmodule InvarcWeb.AccountsController do
   }
   def register(conn, params) do
     with {:ok, casted_params} <- Helpers.Params.cast_params(params, @register_params_schema),
-         {:ok, _} <- Accounts.register(casted_params) do
+         {:ok, account} <- Accounts.register(casted_params) do
       conn
-      |> send_resp(:created, "")
+      |> put_status(:created)
+      |> render(:account, account: account)
     end
   end
 end
