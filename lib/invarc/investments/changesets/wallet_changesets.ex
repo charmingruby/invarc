@@ -7,8 +7,8 @@ defmodule Invarc.Investments.Changesets.WalletChangesets do
 
   alias Invarc.Investments.Models.Wallet
 
-  @fields ~w(name current_balance record_balance total_money_applied account_id)a
-  @required ~w(name current_balance record_balance total_money_applied)a
+  @fields ~w(name current_balance record_balance total_money_applied account_id account_id)a
+  @required ~w(name current_balance record_balance total_money_applied account_id)a
 
   def build(%Wallet{} = wallet, params) do
     wallet

@@ -8,15 +8,17 @@ defmodule Invarc.Investments.Changesets.WalletChangesetsTest do
       name: "1",
       current_balance: "no current_balance",
       record_balance: "no record_balance",
-      total_money_applied: "no total_money_applied"
+      total_money_applied: "no total_money_applied",
+      account_id: 12
     }
     @missing_required_params %{}
-    @valid_params %{name: "dummy wallet"}
+    @valid_params %{name: "dummy wallet", account_id: Ecto.UUID.generate()}
     @valid_wallet %Wallet{
       name: "new dummy name",
       current_balance: 100_000,
       record_balance: 100_000,
-      total_money_applied: 100_000
+      total_money_applied: 100_000,
+      account_id: Ecto.UUID.generate()
     }
 
     test "should return an error changeset with invalid params" do
@@ -27,6 +29,7 @@ defmodule Invarc.Investments.Changesets.WalletChangesetsTest do
       assert errors_on(changeset)[:current_balance]
       assert errors_on(changeset)[:record_balance]
       assert errors_on(changeset)[:total_money_applied]
+      assert errors_on(changeset)[:account_id]
     end
 
     test "should return an error changeset with missing required params" do
@@ -37,6 +40,7 @@ defmodule Invarc.Investments.Changesets.WalletChangesetsTest do
       refute errors_on(changeset)[:current_balance]
       refute errors_on(changeset)[:record_balance]
       refute errors_on(changeset)[:total_money_applied]
+      assert errors_on(changeset)[:account_id]
     end
 
     test "should return a valid changeset on valid params" do
@@ -47,6 +51,7 @@ defmodule Invarc.Investments.Changesets.WalletChangesetsTest do
       refute errors_on(changeset)[:current_balance]
       refute errors_on(changeset)[:record_balance]
       refute errors_on(changeset)[:total_money_applied]
+      refute errors_on(changeset)[:account_id]
     end
 
     test "should return a valid changeset with new values on new changes" do
@@ -58,6 +63,7 @@ defmodule Invarc.Investments.Changesets.WalletChangesetsTest do
       refute errors_on(changeset)[:current_balance]
       refute errors_on(changeset)[:record_balance]
       refute errors_on(changeset)[:total_money_applied]
+      refute errors_on(changeset)[:account_id]
     end
   end
 end
