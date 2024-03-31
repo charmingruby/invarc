@@ -6,4 +6,5 @@ defmodule Invarc.Investments do
   alias Invarc.Investments.UseCases
 
   defdelegate create_wallet(params), to: UseCases.CreateWallet, as: :call
+  defdelegate create_category(params), to: UseCases.CreateCategory, as: :call
 end

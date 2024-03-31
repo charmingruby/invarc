@@ -19,6 +19,6 @@ defmodule Invarc.Investments.Changesets.WalletChangesets do
 
   defp validate_rules(changeset) do
     changeset
-    |> validate_length(:name, min: 2, max: 16)
+    |> validate_length(:name, min: 2, max: 32)
   end
 end

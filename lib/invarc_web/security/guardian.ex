@@ -16,7 +16,7 @@ defmodule InvarcWeb.Security.Guardian do
   def resource_from_claims(claims) do
     claims
     |> Map.get("sub")
-    |> AccountLoaders.one_by_id()
+    |> AccountLoaders.load_one_by_id()
   end
 
   def generate_token(account) do

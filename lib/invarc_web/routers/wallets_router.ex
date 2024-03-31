@@ -18,5 +18,6 @@ defmodule InvarcWeb.Routers.WalletsRouter do
     pipe_through [:api, :auth]
 
     post "/", WalletsController, :create_wallet
+    post "/categories", WalletsController, :create_investment_category
   end
 end

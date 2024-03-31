@@ -30,6 +30,16 @@ Content-Type: application/json
 Authorization:	Bearer {{accessToken}}
 
 {
-	"name": "dummy name"
+	"name": "dummy wallet name"
 }
 
+###
+
+# @name create_investment_category
+POST {{baseUrl}}/wallets/categories
+Content-Type: application/json
+Authorization:	Bearer {{accessToken}}
+
+{
+	"name": "dummy category name"
+}

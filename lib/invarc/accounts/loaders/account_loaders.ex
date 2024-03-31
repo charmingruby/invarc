@@ -6,7 +6,7 @@ defmodule Invarc.Accounts.Loaders.AccountLoaders do
   alias Invarc.Accounts.Loaders.Queries.AccountQueries
   alias Invarc.Repo
 
-  def one_by_email(email) do
+  def load_one_by_email(email) do
     result =
       email
       |> AccountQueries.one_by_email()
@@ -18,7 +18,7 @@ defmodule Invarc.Accounts.Loaders.AccountLoaders do
     end
   end
 
-  def one_by_id(id) do
+  def load_one_by_id(id) do
     result =
       id
       |> AccountQueries.one_by_id()
