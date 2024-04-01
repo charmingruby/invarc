@@ -1,4 +1,8 @@
 defmodule Invarc.Investments.Changesets.InvestmentCategoryChangesets do
+  @moduledoc """
+  Module to deal with investment categories changeset validations
+  """
+
   alias Invarc.Investments.Models.InvestmentCategory
 
   import Ecto.Changeset

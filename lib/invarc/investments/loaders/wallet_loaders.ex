@@ -2,6 +2,7 @@ defmodule Invarc.Investments.Loaders.WalletLoaders do
   @moduledoc """
   Module to execute wallets read queries
   """
+
   alias Invarc.{Investments.Loaders.Queries.WalletQueries, Repo}
 
   def load_one_by_id(id) do

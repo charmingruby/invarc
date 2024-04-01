@@ -1,8 +1,12 @@
 defmodule Invarc.Investments.UseCases.CreateCategory do
-  alias Invarc.Investments.Mutators.CategoryMutators
+  @moduledoc """
+  Create investment category use case
+  """
+
   alias Invarc.Investments.Changesets.InvestmentCategoryChangesets
-  alias Invarc.Investments.Models.InvestmentCategory
   alias Invarc.Investments.Loaders.CategoryLoaders
+  alias Invarc.Investments.Models.InvestmentCategory
+  alias Invarc.Investments.Mutators.CategoryMutators
 
   alias Invarc.Accounts.Loaders.AccountLoaders
 

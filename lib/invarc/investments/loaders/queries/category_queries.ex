@@ -1,5 +1,10 @@
 defmodule Invarc.Investments.Loaders.Queries.CategoryQueries do
+  @moduledoc """
+  Module with investment categories read queries
+  """
+
   alias Invarc.Investments.Models.InvestmentCategory
+
   import Ecto.Query
 
   def all, do: InvestmentCategory
