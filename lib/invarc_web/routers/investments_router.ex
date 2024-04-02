@@ -1,6 +1,6 @@
-defmodule InvarcWeb.Routers.WalletsRouter do
+defmodule InvarcWeb.Routers.InvestmentsRouter do
   @moduledoc """
-  Routes groups for "/api/wallets
+  Routes groups for "/api/investments
   """
 
   use InvarcWeb, :router
@@ -18,6 +18,6 @@ defmodule InvarcWeb.Routers.WalletsRouter do
   scope "/", InvarcWeb do
     pipe_through [:api, :auth]
 
-    post "/", WalletsController, :create_wallet
+    post "/categories", InvestmentsController, :create_investment_category
   end
 end
