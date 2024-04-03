@@ -19,5 +19,6 @@ defmodule InvarcWeb.Routers.InvestmentsRouter do
     pipe_through [:api, :auth]
 
     post "/categories", InvestmentsController, :create_investment_category
+    post "/", InvestmentsController, :create_investment
   end
 end

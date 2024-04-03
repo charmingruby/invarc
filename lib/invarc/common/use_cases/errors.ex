@@ -10,4 +10,8 @@ defmodule Invarc.Common.UseCases.Errors do
   def wrap_conflict_error(field) do
     {:error, {:conflict, field}}
   end
+
+  def unauthorized_error do
+    {:error, :unauthorized}
+  end
 end

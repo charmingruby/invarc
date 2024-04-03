@@ -9,6 +9,11 @@ defmodule Invarc.Investments.Loaders.Queries.CategoryQueries do
 
   def all, do: InvestmentCategory
 
+  def one_by_id(id) do
+    from c in all(),
+      where: c.id == ^id
+  end
+
   def one_by_name_and_account_id(%{name: name, account_id: account_id}) do
     from c in all(),
       where: c.account_id == ^account_id,

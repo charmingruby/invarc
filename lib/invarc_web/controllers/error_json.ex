@@ -13,6 +13,13 @@ defmodule InvarcWeb.ErrorJSON do
     }
   end
 
+  def error(%{status: :unauthorized}) do
+    %{
+      status: :unauthorized,
+      message: "unauthorized"
+    }
+  end
+
   # -
   # Not Found
   # -

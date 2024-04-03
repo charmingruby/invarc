@@ -16,4 +16,16 @@ defmodule Invarc.Investments.Loaders.CategoryLoaders do
       category -> {:ok, category}
     end
   end
+
+  def load_one_by_id(id) do
+    result =
+      id
+      |> CategoryQueries.one_by_id()
+      |> Repo.one()
+
+    case result do
+      nil -> {:error, :not_found}
+      category -> {:ok, category}
+    end
+  end
 end

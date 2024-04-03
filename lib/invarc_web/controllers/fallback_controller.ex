@@ -35,6 +35,13 @@ defmodule InvarcWeb.FallbackController do
     |> render(:error, status: :invalid_credentials)
   end
 
+  def call(conn, {:error, :unauthorized}) do
+    conn
+    |> put_status(:unauthorized)
+    |> put_view(json: InvarcWeb.ErrorJSON)
+    |> render(:error, status: :unauthorized)
+  end
+
   # -
   # Bad request errors
   # -
