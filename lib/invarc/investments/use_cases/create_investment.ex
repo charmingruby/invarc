@@ -3,19 +3,13 @@ defmodule Invarc.Investments.UseCases.CreateInvestment do
   Create investment use case
   """
 
-  alias Invarc.Investments.Mutators.WalletMutators
   alias Invarc.Common.UseCases.Errors
   alias Invarc.Investments.Changesets.InvestmentChangesets
   alias Invarc.Investments.Loaders.{CategoryLoaders, InvestmentLoaders, WalletLoaders}
   alias Invarc.Investments.Models.Investment
-  alias Invarc.Investments.Mutators.InvestmentMutators
+  alias Invarc.Investments.Mutators.{InvestmentMutators, WalletMutators}
 
-  def call(%{wallet_id: wallet_id} = params) do
-    case WalletLoaders.load_one_by_id(wallet_id) do
-      {:ok, wallet} -> verify_if_is_owner(params, wallet)
-      {:error, :not_found} -> Errors.wrap_not_found_error("wallet")
-    end
-
+  def call(params) do
     with {:ok, wallet} <- verify_if_wallet_exists(params),
          {:ok} <- verify_if_is_owner(params, wallet),
          {:ok} <- verify_if_category_exists(params),

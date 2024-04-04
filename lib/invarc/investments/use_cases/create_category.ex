@@ -12,9 +12,16 @@ defmodule Invarc.Investments.UseCases.CreateCategory do
 
   alias Invarc.Common.UseCases.Errors
 
-  def call(%{account_id: account_id} = params) do
+  def call(params) do
+    with {:ok} <- verify_if_account_exists(params),
+         {:ok} <- verify_if_category_already_exists(params) do
+      handle_create_category_for_account(params)
+    end
+  end
+
+  defp verify_if_account_exists(%{account_id: account_id}) do
     case AccountLoaders.load_one_by_id(account_id) do
-      {:ok, _} -> verify_if_category_already_exists(params)
+      {:ok, _} -> {:ok}
       {:error, :not_found} -> Errors.wrap_not_found_error("account_id")
     end
   end

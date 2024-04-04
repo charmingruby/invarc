@@ -12,10 +12,16 @@ defmodule Invarc.Accounts.UseCases.Register do
 
   alias Invarc.Common.UseCases.Errors
 
-  def call(%{email: email} = params) do
+  def call(params) do
+    with {:ok} <- verify_if_account_exists(params) do
+      handle_create_account(params)
+    end
+  end
+
+  defp verify_if_account_exists(%{email: email}) do
     case AccountLoaders.load_one_by_email(email) do
       {:ok, _} -> Errors.wrap_conflict_error("email")
-      {:error, :not_found} -> handle_create_account(params)
+      {:error, :not_found} -> {:ok}
     end
   end
 
