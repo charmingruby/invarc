@@ -3,6 +3,7 @@ defmodule Invarc.Investments.UseCases.CreateInvestment do
   Create investment use case
   """
 
+  alias Invarc.Investments.Mutators.WalletMutators
   alias Invarc.Common.UseCases.Errors
   alias Invarc.Investments.Changesets.InvestmentChangesets
   alias Invarc.Investments.Loaders.{CategoryLoaders, InvestmentLoaders, WalletLoaders}
@@ -19,7 +20,7 @@ defmodule Invarc.Investments.UseCases.CreateInvestment do
          {:ok} <- verify_if_is_owner(params, wallet),
          {:ok} <- verify_if_category_exists(params),
          {:ok} <- verify_if_investment_already_exists(params) do
-      handle_create_investment(params)
+      handle_create_investment(params, wallet)
     end
   end
 
@@ -53,11 +54,31 @@ defmodule Invarc.Investments.UseCases.CreateInvestment do
     end
   end
 
-  defp handle_create_investment(params) do
+  defp handle_create_investment(params, wallet) do
     corrected_params = Map.put(params, :initial_value, params.value)
 
-    %Investment{}
-    |> InvestmentChangesets.build(corrected_params)
-    |> InvestmentMutators.create()
+    investment_result =
+      %Investment{}
+      |> InvestmentChangesets.build(corrected_params)
+      |> InvestmentMutators.create()
+
+    wallet_result = handle_wallet_metrics_update(params, wallet)
+
+    with {:ok, _} <- investment_result,
+         {:ok, _} <- wallet_result do
+      investment_result
+    else
+      {:error, _} = err -> err
+    end
+  end
+
+  defp handle_wallet_metrics_update(params, wallet) do
+    new_funds_applied = wallet.funds_applied + params.value
+
+    updated_params = %{
+      funds_applied: new_funds_applied
+    }
+
+    WalletMutators.update(wallet, updated_params)
   end
 end

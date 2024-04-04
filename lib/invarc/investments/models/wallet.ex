@@ -13,9 +13,8 @@ defmodule Invarc.Investments.Models.Wallet do
   @primary_key {:id, :binary_id, autogenerate: true}
   schema "wallets" do
     field :name, :string
-    field :current_balance, :integer, default: 0
-    field :record_balance, :integer, default: 0
-    field :total_money_applied, :integer, default: 0
+    field :funds_received, :integer, default: 0
+    field :funds_applied, :integer, default: 0
 
     # relationships
     belongs_to :account, Account, type: :binary_id

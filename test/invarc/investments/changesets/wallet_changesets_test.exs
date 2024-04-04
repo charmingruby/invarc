@@ -6,18 +6,16 @@ defmodule Invarc.Investments.Changesets.WalletChangesetsTest do
   describe "build/2" do
     @invalid_wallet_params %{
       name: "1",
-      current_balance: "no current_balance",
-      record_balance: "no record_balance",
-      total_money_applied: "no total_money_applied",
+      funds_received: "no funds_received",
+      funds_applied: "no funds_applied",
       account_id: 12
     }
     @missing_required_params %{}
     @valid_params %{name: "dummy wallet", account_id: Ecto.UUID.generate()}
     @valid_wallet %Wallet{
       name: "new dummy name",
-      current_balance: 100_000,
-      record_balance: 100_000,
-      total_money_applied: 100_000,
+      funds_received: 100_000,
+      funds_applied: 100_000,
       account_id: Ecto.UUID.generate()
     }
 
@@ -26,9 +24,8 @@ defmodule Invarc.Investments.Changesets.WalletChangesetsTest do
 
       assert %Ecto.Changeset{valid?: false} = changeset
       assert errors_on(changeset)[:name]
-      assert errors_on(changeset)[:current_balance]
-      assert errors_on(changeset)[:record_balance]
-      assert errors_on(changeset)[:total_money_applied]
+      assert errors_on(changeset)[:funds_received]
+      assert errors_on(changeset)[:funds_applied]
       assert errors_on(changeset)[:account_id]
     end
 
@@ -37,9 +34,8 @@ defmodule Invarc.Investments.Changesets.WalletChangesetsTest do
 
       assert %Ecto.Changeset{valid?: false} = changeset
       assert errors_on(changeset)[:name]
-      refute errors_on(changeset)[:current_balance]
-      refute errors_on(changeset)[:record_balance]
-      refute errors_on(changeset)[:total_money_applied]
+      refute errors_on(changeset)[:funds_received]
+      refute errors_on(changeset)[:funds_applied]
       assert errors_on(changeset)[:account_id]
     end
 
@@ -48,9 +44,8 @@ defmodule Invarc.Investments.Changesets.WalletChangesetsTest do
 
       assert %Ecto.Changeset{valid?: true} = changeset
       refute errors_on(changeset)[:name]
-      refute errors_on(changeset)[:current_balance]
-      refute errors_on(changeset)[:record_balance]
-      refute errors_on(changeset)[:total_money_applied]
+      refute errors_on(changeset)[:funds_received]
+      refute errors_on(changeset)[:funds_applied]
       refute errors_on(changeset)[:account_id]
     end
 
@@ -60,9 +55,8 @@ defmodule Invarc.Investments.Changesets.WalletChangesetsTest do
       assert %Ecto.Changeset{valid?: true} = changeset
       assert @valid_params.name == changeset.changes[:name]
       refute errors_on(changeset)[:name]
-      refute errors_on(changeset)[:current_balance]
-      refute errors_on(changeset)[:record_balance]
-      refute errors_on(changeset)[:total_money_applied]
+      refute errors_on(changeset)[:funds_received]
+      refute errors_on(changeset)[:funds_applied]
       refute errors_on(changeset)[:account_id]
     end
   end

@@ -7,9 +7,8 @@ defmodule InvarcWeb.Presenters.WalletsPresenter do
     %{
       id: wallet.id,
       name: wallet.name,
-      current_balance: wallet.current_balance,
-      record_balance: wallet.record_balance,
-      total_money_applied: wallet.total_money_applied,
+      funds_applied: wallet.funds_applied,
+      funds_received: wallet.funds_received,
       account_id: wallet.account_id,
       inserted_at: wallet.inserted_at,
       updated_at: wallet.updated_at
