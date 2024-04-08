@@ -50,6 +50,13 @@ defmodule InvarcWeb.ErrorJSON do
     }
   end
 
+  def error(%{error: %{status: :bad_request, message: message}}) do
+    %{
+      status: :bad_request,
+      errors: message
+    }
+  end
+
   # -
   # Not handled error
   # -

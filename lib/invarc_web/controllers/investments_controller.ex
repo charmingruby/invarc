@@ -39,4 +39,21 @@ defmodule InvarcWeb.InvestmentsController do
       |> render(:investment, investment: investment)
     end
   end
+
+  @withdraw_investment_params_schema %{
+    investment_id: [Ecto.UUID, required: true],
+    wallet_id: [Ecto.UUID, required: true],
+    resultant_value: [:integer, required: true]
+  }
+  def withdraw_investment(conn, params) do
+    with {:ok, casted_params} <-
+           Helpers.Params.cast_params(params, @withdraw_investment_params_schema),
+         {:ok, account, _claims} <- Helpers.Connection.retrieve_token_payload(conn),
+         built_params = Map.put(casted_params, :account_id, account.id),
+         {:ok, investment} <- Invarc.Investments.withdraw_investment(built_params) do
+      conn
+      |> put_status(:ok)
+      |> render(:investment, investment: investment)
+    end
+  end
 end

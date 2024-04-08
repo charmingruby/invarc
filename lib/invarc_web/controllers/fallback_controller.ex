@@ -54,6 +54,15 @@ defmodule InvarcWeb.FallbackController do
     |> render(:error, error: err)
   end
 
+  def call(conn, {:error, {:bad_request, message}}) do
+    err = %{status: :bad_request, message: message}
+
+    conn
+    |> put_status(:bad_request)
+    |> put_view(json: InvarcWeb.ErrorJSON)
+    |> render(:error, error: err)
+  end
+
   # -
   # Conflict errors
   # -

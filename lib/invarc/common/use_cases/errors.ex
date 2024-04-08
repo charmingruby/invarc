@@ -11,6 +11,10 @@ defmodule Invarc.Common.UseCases.Errors do
     {:error, {:conflict, field}}
   end
 
+  def wrap_bad_request_error(message) do
+    {:error, {:bad_request, message}}
+  end
+
   def unauthorized_error do
     {:error, :unauthorized}
   end

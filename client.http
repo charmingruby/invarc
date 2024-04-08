@@ -2,6 +2,7 @@
 @accessToken = {{authenticate.response.body.access_token}}
 @walletId = {{create_wallet.response.body.id}}
 @categoryId = {{create_investment_category.response.body.id}}
+@investmentId = {{create_investment.response.body.id}}
 
 # @name register
 POST {{baseUrl}}/accounts
@@ -60,4 +61,15 @@ Authorization:	Bearer {{accessToken}}
 	"value": 100050,
 	"category_id": "{{categoryId}}",
 	"wallet_id": "{{walletId}}"
+}
+
+###
+
+# @name withdraw_investment
+POST {{baseUrl}}/investments/{{walletId}}/withdraw/{{investmentId}}
+Content-Type: application/json
+Authorization:	Bearer {{accessToken}}
+
+{
+	"resultant_value": 200050
 }

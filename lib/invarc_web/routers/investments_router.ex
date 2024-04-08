@@ -20,5 +20,6 @@ defmodule InvarcWeb.Routers.InvestmentsRouter do
 
     post "/categories", InvestmentsController, :create_investment_category
     post "/", InvestmentsController, :create_investment
+    post "/:wallet_id/withdraw/:investment_id", InvestmentsController, :withdraw_investment
   end
 end
