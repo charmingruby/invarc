@@ -2,8 +2,6 @@ defmodule Invarc.Accounts.UseCases.Authenticate do
   @moduledoc """
   Authentication use case
   """
-
-  alias Invarc.Common.UseCases.Errors
   alias Invarc.{Accounts.Loaders.AccountLoaders, Common.Security}
 
   def call(params) do
@@ -15,7 +13,7 @@ defmodule Invarc.Accounts.UseCases.Authenticate do
   defp verify_if_account_exists(%{email: email}) do
     case AccountLoaders.load_one_by_email(email) do
       {:ok, account} -> {:ok, account}
-      {:error, :not_found} -> Errors.wrap_not_found_error("email")
+      {:error, :not_found} -> {:error, :invalid_credentials}
     end
   end
 
