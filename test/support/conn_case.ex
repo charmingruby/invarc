@@ -24,6 +24,8 @@ defmodule InvarcWeb.ConnCase do
 
       use InvarcWeb, :verified_routes
 
+      import Invarc.Factory
+
       # Import conveniences for testing with connections
       import Plug.Conn
       import Phoenix.ConnTest

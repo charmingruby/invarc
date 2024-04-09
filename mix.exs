@@ -48,7 +48,8 @@ defmodule Invarc.MixProject do
       {:guardian, "~> 2.0"},
 
       # dev test
-      {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:ex_machina, "~> 2.7.0", only: :test}
     ]
   end
 

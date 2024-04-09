@@ -20,5 +20,27 @@ defmodule InvarcWeb.AccountsControllerTest do
       assert result["name"] == name
       assert result["email"] == email
     end
+
+    test "it should be not able to create a new account with an email that is already taken", %{
+      conn: conn
+    } do
+      conflicted_email = "dummy@example.com"
+
+      insert(:account, email: conflicted_email)
+
+      body = %{
+        "name" => "Dummy Name",
+        "email" => conflicted_email,
+        "password" => "password123"
+      }
+
+      assert %{
+               "message" => "email is already taken",
+               "status" => "conflict"
+             } =
+               conn
+               |> post("/api/accounts", body)
+               |> json_response(409)
+    end
   end
 end
