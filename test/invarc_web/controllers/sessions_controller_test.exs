@@ -39,7 +39,7 @@ defmodule InvarcWeb.SessionsControllerTest do
       assert nil != result["access_token"]
     end
 
-    test "it should be able to authenticate with a invalid email", %{conn: conn} do
+    test "it should not be able to authenticate with a invalid email", %{conn: conn} do
       body = %{
         "email" => @invalid_credentials.email,
         "password" => @invalid_credentials.password
@@ -51,7 +51,7 @@ defmodule InvarcWeb.SessionsControllerTest do
                |> json_response(401)
     end
 
-    test "it should be able to validate authentication with invalid password", %{conn: conn} do
+    test "it should not be able to validate authentication with invalid password", %{conn: conn} do
       body = %{
         "email" => @valid_credentials.email,
         "password" => @invalid_credentials.password
