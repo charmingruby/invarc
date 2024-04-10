@@ -7,12 +7,7 @@ defmodule Invarc.Investments.Models.Transaction do
     Wallet
   }
 
-  import Ecto.Changeset
-
   use Ecto.Schema
-
-  @fields ~w(name amount status type wallet_receiver_id wallet_sender_id)a
-  @required ~w(name amount status type)a
 
   @primary_key {:id, :binary_id, autogenerate: true}
   schema "transactions" do
@@ -27,11 +22,5 @@ defmodule Invarc.Investments.Models.Transaction do
     belongs_to :category, InvestmentCategory, type: :binary_id
 
     timestamps()
-  end
-
-  def changeset(struct \\ %__MODULE__{}, params) do
-    struct
-    |> cast(params, @fields)
-    |> validate_required(@required)
   end
 end
