@@ -1,6 +1,7 @@
 defmodule Invarc.Factory do
   use ExMachina.Ecto, repo: Invarc.Repo
 
+  alias Invarc.Investments.Models.InvestmentCategory
   alias Invarc.Investments.Models.Wallet
   alias Invarc.Accounts.Models.Account
 
@@ -19,6 +20,13 @@ defmodule Invarc.Factory do
       name: "dummy_wallet_name",
       funds_applied: 0,
       funds_received: 0,
+      account_id: nil
+    }
+  end
+
+  def investment_category_factory do
+    %InvestmentCategory{
+      name: "dummy_category_name",
       account_id: nil
     }
   end
