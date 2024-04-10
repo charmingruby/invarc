@@ -1,11 +1,15 @@
 defmodule Invarc.Investments.UseCases.WithdrawInvestment do
+  @moduledoc """
+  Withdraw investment use case
+  """
+
   alias Invarc.Common.UseCases.Errors
 
   alias Invarc.Investments.{
-    Mutators.WalletMutators,
-    Mutators.InvestmentMutators,
     Loaders.InvestmentLoaders,
-    Loaders.WalletLoaders
+    Loaders.WalletLoaders,
+    Mutators.InvestmentMutators,
+    Mutators.WalletMutators
   }
 
   def call(params) do

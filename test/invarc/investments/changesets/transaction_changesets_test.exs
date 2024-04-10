@@ -7,7 +7,7 @@ defmodule Invarc.Investments.Changesets.TransactionChangesetsTest do
   describe "build/2" do
     @invalid_transaction_params %{
       name: 2,
-      amount: -10000,
+      amount: -10_000,
       status: "pending",
       type: "investment",
       wallet_id: 1
@@ -19,7 +19,7 @@ defmodule Invarc.Investments.Changesets.TransactionChangesetsTest do
           wallet_name: "dummy_wallet",
           type: "income"
         }),
-      amount: 10000,
+      amount: 10_000,
       status: "success",
       type: "income",
       wallet_id: Ecto.UUID.generate()
@@ -30,7 +30,7 @@ defmodule Invarc.Investments.Changesets.TransactionChangesetsTest do
           wallet_name: "dummy_wallet",
           type: "outcome"
         }),
-      amount: 20000,
+      amount: 20_000,
       status: "rollback",
       type: "outcome",
       wallet_id: Ecto.UUID.generate()

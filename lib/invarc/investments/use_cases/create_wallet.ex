@@ -2,6 +2,7 @@ defmodule Invarc.Investments.UseCases.CreateWallet do
   @moduledoc """
   Create wallet use case
   """
+
   alias Invarc.Common.UseCases.Errors
 
   alias Invarc.Investments.{

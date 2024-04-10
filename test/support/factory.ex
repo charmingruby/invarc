@@ -1,9 +1,12 @@
 defmodule Invarc.Factory do
+  @moduledoc """
+  Models factories
+  """
+
   use ExMachina.Ecto, repo: Invarc.Repo
 
-  alias Invarc.Investments.Models.InvestmentCategory
-  alias Invarc.Investments.Models.Wallet
   alias Invarc.Accounts.Models.Account
+  alias Invarc.Investments.Models.{InvestmentCategory, Wallet}
 
   def account_factory do
     %Account{

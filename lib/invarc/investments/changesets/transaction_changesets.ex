@@ -1,4 +1,8 @@
 defmodule Invarc.Investments.Changesets.TransactionChangesets do
+  @moduledoc """
+  Module to deal with transactions changeset validations
+  """
+
   alias Invarc.Investments.Models.Transaction
 
   import Ecto.Changeset
