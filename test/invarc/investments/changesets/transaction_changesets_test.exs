@@ -10,7 +10,9 @@ defmodule Invarc.Investments.Changesets.TransactionChangesetsTest do
       amount: -10_000,
       status: "pending",
       type: "investment",
-      wallet_id: 1
+      wallet_id: 1,
+      category_id: 1,
+      investment_id: 1
     }
     @missing_required_params %{}
     @valid_params %{
@@ -22,7 +24,9 @@ defmodule Invarc.Investments.Changesets.TransactionChangesetsTest do
       amount: 10_000,
       status: "success",
       type: "income",
-      wallet_id: Ecto.UUID.generate()
+      wallet_id: Ecto.UUID.generate(),
+      category_id: Ecto.UUID.generate(),
+      investment_id: Ecto.UUID.generate()
     }
     @valid_transaction %Transaction{
       name:
@@ -46,6 +50,8 @@ defmodule Invarc.Investments.Changesets.TransactionChangesetsTest do
       assert errors_on(changeset)[:status]
       assert errors_on(changeset)[:type]
       assert errors_on(changeset)[:wallet_id]
+      assert errors_on(changeset)[:category_id]
+      assert errors_on(changeset)[:investment_id]
     end
 
     test "should return an error changeset with missing required params" do
@@ -58,6 +64,8 @@ defmodule Invarc.Investments.Changesets.TransactionChangesetsTest do
       assert errors_on(changeset)[:status]
       assert errors_on(changeset)[:type]
       assert errors_on(changeset)[:wallet_id]
+      assert errors_on(changeset)[:category_id]
+      assert errors_on(changeset)[:investment_id]
     end
 
     test "should return a changeset on valid params" do
@@ -69,6 +77,8 @@ defmodule Invarc.Investments.Changesets.TransactionChangesetsTest do
       refute errors_on(changeset)[:status]
       refute errors_on(changeset)[:type]
       refute errors_on(changeset)[:wallet_id]
+      refute errors_on(changeset)[:category_id]
+      refute errors_on(changeset)[:investment_id]
     end
 
     test "should return a valid changeset with new values on new changes" do
@@ -87,6 +97,8 @@ defmodule Invarc.Investments.Changesets.TransactionChangesetsTest do
       refute errors_on(changeset)[:status]
       refute errors_on(changeset)[:type]
       refute errors_on(changeset)[:wallet_id]
+      refute errors_on(changeset)[:category_id]
+      refute errors_on(changeset)[:investment_id]
     end
   end
 end

@@ -59,9 +59,9 @@ defmodule Invarc.Investments.UseCases.CreateInvestment do
   defp handle_create_investment_transaction(params, wallet) do
     transaction =
       Multi.new()
-      |> handle_create_outcome_transaction(params, wallet)
-      |> handle_wallet_metrics_update(params, wallet)
       |> handle_create_investment(params)
+      |> handle_wallet_metrics_update(params, wallet)
+      |> handle_create_outcome_transaction(params, wallet)
       |> Repo.transaction()
 
     case transaction do
@@ -71,22 +71,23 @@ defmodule Invarc.Investments.UseCases.CreateInvestment do
   end
 
   defp handle_create_outcome_transaction(multi, params, wallet) do
-    transaction_name =
-      TransactionChangesets.build_transaction_name(%{wallet_name: wallet.name, type: "outcome"})
+    Multi.insert(multi, :transaction, fn %{investment: investment} ->
+      transaction_name =
+        TransactionChangesets.build_transaction_name(%{wallet_name: wallet.name, type: "outcome"})
 
-    transaction_params = %{
-      name: transaction_name,
-      amount: params.value,
-      status: "success",
-      type: "outcome",
-      wallet_id: wallet.id
-    }
+      transaction_params = %{
+        name: transaction_name,
+        amount: params.value,
+        status: "success",
+        type: "outcome",
+        wallet_id: wallet.id,
+        investment_id: investment.id,
+        category_id: investment.category_id
+      }
 
-    transaction =
       %Transaction{}
       |> TransactionChangesets.build(transaction_params)
-
-    Multi.insert(multi, :transaction, transaction)
+    end)
   end
 
   defp handle_create_investment(multi, params) do

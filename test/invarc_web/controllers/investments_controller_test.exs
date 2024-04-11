@@ -1,6 +1,7 @@
 defmodule InvarcWeb.InvestmentsControllerTest do
   use InvarcWeb.ConnCase, async: true
 
+  alias Invarc.Investments.Loaders.TransactionLoaders
   alias InvarcWeb.Security.Guardian
 
   setup ctx do
@@ -114,6 +115,16 @@ defmodule InvarcWeb.InvestmentsControllerTest do
       assert result["resultant_value"] == empty_resultant_value
       assert result["source"] == body["source"]
       assert result["wallet_id"] == wallet.id
+
+      {:ok, transactions_list} = TransactionLoaders.load_many_by_investment_id(result["id"])
+
+      assert length(transactions_list) == 1
+
+      transaction = hd(transactions_list)
+
+      assert transaction.wallet_id == wallet.id
+      assert transaction.category_id == category.id
+      assert transaction.amount == body["value"]
     end
   end
 end
