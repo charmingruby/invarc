@@ -2,23 +2,29 @@ defmodule Invarc.Investments.UseCases.WithdrawInvestment do
   @moduledoc """
   Withdraw investment use case
   """
-
+  alias Ecto.Multi
   alias Invarc.Common.UseCases.Errors
 
-  alias Invarc.Investments.{
-    Loaders.InvestmentLoaders,
-    Loaders.WalletLoaders,
-    Mutators.InvestmentMutators,
-    Mutators.WalletMutators
+  alias Invarc.Investments.Changesets.{
+    InvestmentChangesets,
+    TransactionChangesets,
+    WalletChangesets
   }
+
+  alias Invarc.Investments.Loaders.{
+    InvestmentLoaders,
+    WalletLoaders
+  }
+
+  alias Invarc.Investments.Models.Transaction
+  alias Invarc.Repo
 
   def call(params) do
     with {:ok, wallet} <- verify_if_wallet_exists(params),
          {:ok} <- verify_if_is_owner(params, wallet),
          {:ok, investment} <- verify_if_investment_exists(params),
-         {:ok} <- validate_withdrawal(investment),
-         {:ok, updated_investment} <- handle_update_investment_resultant_value(investment, params) do
-      handle_update_wallet_metrics(updated_investment, wallet)
+         {:ok} <- validate_withdrawal(investment) do
+      handle_withdraw_investment_transaction(params, wallet, investment)
     end
   end
 
@@ -54,21 +60,58 @@ defmodule Invarc.Investments.UseCases.WithdrawInvestment do
     end
   end
 
-  defp handle_update_investment_resultant_value(investment, %{resultant_value: resultant_value}) do
+  defp handle_withdraw_investment_transaction(params, wallet, investment) do
+    transaction =
+      Multi.new()
+      |> handle_update_investment_resultant_value(investment, params)
+      |> handle_update_wallet_metrics(investment, wallet)
+      |> handle_create_income_transaction(params, wallet)
+      |> Repo.transaction()
+
+    case transaction do
+      {:ok, result} -> {:ok, result.investment}
+      {:error, _, reason, _} -> {:error, reason}
+    end
+  end
+
+  defp handle_create_income_transaction(multi, params, wallet) do
+    Multi.insert(multi, :transaction, fn %{investment: investment} ->
+      transaction_name =
+        TransactionChangesets.build_transaction_name(%{wallet_name: wallet.name, type: "income"})
+
+      transaction_params = %{
+        name: transaction_name,
+        amount: params.resultant_value,
+        status: "success",
+        type: "income",
+        wallet_id: wallet.id,
+        investment_id: investment.id,
+        category_id: investment.category_id
+      }
+
+      %Transaction{}
+      |> TransactionChangesets.build(transaction_params)
+    end)
+  end
+
+  defp handle_update_investment_resultant_value(multi, investment, %{
+         resultant_value: resultant_value
+       }) do
     updated_params =
       %{resultant_value: resultant_value}
 
-    InvestmentMutators.update(investment, updated_params)
+    changeset = InvestmentChangesets.build(investment, updated_params)
+
+    Multi.update(multi, :investment, changeset)
   end
 
-  defp handle_update_wallet_metrics(updated_investment, wallet) do
+  defp handle_update_wallet_metrics(multi, investment, wallet) do
     updated_wallet_params = %{
-      funds_received: wallet.funds_received + updated_investment.resultant_value
+      funds_received: wallet.funds_received + investment.resultant_value
     }
 
-    case WalletMutators.update(wallet, updated_wallet_params) do
-      {:error, _reason} = err -> err
-      {:ok, _wallet} -> {:ok, updated_investment}
-    end
+    changeset = WalletChangesets.build(wallet, updated_wallet_params)
+
+    Multi.update(multi, :wallet_metrics, changeset)
   end
 end
