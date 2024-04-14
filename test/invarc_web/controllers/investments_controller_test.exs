@@ -1,7 +1,8 @@
 defmodule InvarcWeb.InvestmentsControllerTest do
   use InvarcWeb.ConnCase, async: true
 
-  alias Invarc.Investments.Loaders.TransactionLoaders
+  alias Invarc.Investments.Changesets.TransactionChangesets
+  alias Invarc.Investments.Loaders.{TransactionLoaders, WalletLoaders}
   alias InvarcWeb.Security.Guardian
 
   setup ctx do
@@ -125,6 +126,147 @@ defmodule InvarcWeb.InvestmentsControllerTest do
       assert transaction.wallet_id == wallet.id
       assert transaction.category_id == category.id
       assert transaction.amount == body["value"]
+    end
+  end
+
+  describe "[POST] /api/investments/:wallet_id/withdraw/:investment_id" do
+    test "it should be able to withdraw an available investment", %{
+      conn: conn,
+      account: account
+    } do
+      initial_funds = 100_000
+      transacted_funds = 150_000
+
+      wallet =
+        insert(:wallet, account_id: account.id, funds_applied: initial_funds, funds_received: 0)
+
+      category = insert(:investment_category, account_id: account.id)
+
+      investment =
+        insert(:investment,
+          category_id: category.id,
+          wallet_id: wallet.id,
+          initial_value: initial_funds
+        )
+
+      outcome_transaction =
+        insert(:transaction,
+          name:
+            TransactionChangesets.build_transaction_name(%{
+              wallet_name: wallet.name,
+              type: "outcome"
+            }),
+          investment_id: investment.id,
+          category_id: category.id,
+          wallet_id: wallet.id,
+          amount: initial_funds,
+          type: "outcome",
+          status: "success"
+        )
+
+      body = %{
+        "resultant_value" => transacted_funds
+      }
+
+      wallet_id = wallet.id
+      category_id = category.id
+      parsed_resultant_value = body["resultant_value"] / 100
+      parsed_initial_funds = initial_funds / 100
+      investment_description = investment.description
+      investment_name = investment.name
+      investment_source = investment.source
+
+      assert %{
+               "category_id" => ^category_id,
+               "description" => ^investment_description,
+               "id" => _,
+               "initial_value" => ^parsed_initial_funds,
+               "inserted_at" => _,
+               "name" => ^investment_name,
+               "resultant_value" => ^parsed_resultant_value,
+               "source" => ^investment_source,
+               "updated_at" => _,
+               "wallet_id" => ^wallet_id
+             } =
+               conn
+               |> post("/api/investments/#{wallet.id}/withdraw/#{investment.id}", body)
+               |> json_response(200)
+
+      {:ok, transactions_list} = TransactionLoaders.load_many_by_investment_id(investment.id)
+      assert length(transactions_list) == 2
+
+      [%{type: "outcome"} = out_transaction, %{type: "income"} = in_transaction] =
+        transactions_list
+
+      assert out_transaction.id == outcome_transaction.id
+      assert in_transaction.wallet_id == wallet.id
+      assert in_transaction.category_id == category.id
+      assert in_transaction.amount == transacted_funds
+
+      {:ok, wallet} = WalletLoaders.load_one_by_id(wallet.id)
+      assert wallet.funds_received == transacted_funds
+    end
+
+    test "it should not be able to withdraw an investment not available", %{
+      conn: conn,
+      account: account
+    } do
+      initial_funds = 100_000
+      transacted_funds = 150_000
+
+      wallet =
+        insert(:wallet,
+          account_id: account.id,
+          funds_applied: initial_funds,
+          funds_received: transacted_funds
+        )
+
+      category = insert(:investment_category, account_id: account.id)
+
+      investment =
+        insert(:investment,
+          category_id: category.id,
+          wallet_id: wallet.id,
+          initial_value: initial_funds,
+          resultant_value: transacted_funds
+        )
+
+      insert(:transaction,
+        name:
+          TransactionChangesets.build_transaction_name(%{
+            wallet_name: wallet.name,
+            type: "outcome"
+          }),
+        investment_id: investment.id,
+        category_id: category.id,
+        wallet_id: wallet.id,
+        amount: initial_funds,
+        type: "outcome",
+        status: "success"
+      )
+
+      insert(:transaction,
+        name:
+          TransactionChangesets.build_transaction_name(%{
+            wallet_name: wallet.name,
+            type: "income"
+          }),
+        investment_id: investment.id,
+        category_id: category.id,
+        wallet_id: wallet.id,
+        amount: transacted_funds,
+        type: "income",
+        status: "success"
+      )
+
+      body = %{
+        "resultant_value" => transacted_funds
+      }
+
+      assert %{"errors" => "investment already withdrawed", "status" => "bad_request"} =
+               conn
+               |> post("/api/investments/#{wallet.id}/withdraw/#{investment.id}", body)
+               |> json_response(400)
     end
   end
 end

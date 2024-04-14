@@ -64,7 +64,7 @@ defmodule Invarc.Investments.UseCases.WithdrawInvestment do
     transaction =
       Multi.new()
       |> handle_update_investment_resultant_value(investment, params)
-      |> handle_update_wallet_metrics(investment, wallet)
+      |> handle_update_wallet_metrics(params, wallet)
       |> handle_create_income_transaction(params, wallet)
       |> Repo.transaction()
 
@@ -105,9 +105,9 @@ defmodule Invarc.Investments.UseCases.WithdrawInvestment do
     Multi.update(multi, :investment, changeset)
   end
 
-  defp handle_update_wallet_metrics(multi, investment, wallet) do
+  defp handle_update_wallet_metrics(multi, params, wallet) do
     updated_wallet_params = %{
-      funds_received: wallet.funds_received + investment.resultant_value
+      funds_received: wallet.funds_received + params.resultant_value
     }
 
     changeset = WalletChangesets.build(wallet, updated_wallet_params)
