@@ -160,6 +160,7 @@ defmodule InvarcWeb.InvestmentsControllerTest do
           category_id: category.id,
           wallet_id: wallet.id,
           amount: initial_funds,
+          account_id: account.id,
           type: "outcome",
           status: "success"
         )
@@ -240,6 +241,7 @@ defmodule InvarcWeb.InvestmentsControllerTest do
         investment_id: investment.id,
         category_id: category.id,
         wallet_id: wallet.id,
+        account_id: account.id,
         amount: initial_funds,
         type: "outcome",
         status: "success"
@@ -254,6 +256,7 @@ defmodule InvarcWeb.InvestmentsControllerTest do
         investment_id: investment.id,
         category_id: category.id,
         wallet_id: wallet.id,
+        account_id: account.id,
         amount: transacted_funds,
         type: "income",
         status: "success"

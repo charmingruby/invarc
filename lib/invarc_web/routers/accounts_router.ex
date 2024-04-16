@@ -13,5 +13,6 @@ defmodule InvarcWeb.Routers.AccountsRouter do
     pipe_through :api
 
     post "/", AccountsController, :register
+    get "/me/transactions", AccountsController, :transactions_statement
   end
 end

@@ -16,4 +16,16 @@ defmodule Invarc.Investments.Loaders.TransactionLoaders do
       transactions -> {:ok, transactions}
     end
   end
+
+  def load_many_by_account_id(params) do
+    result =
+      params
+      |> TransactionQueries.many_by_account_id()
+      |> Repo.all()
+
+    case result do
+      nil -> {:error, :not_found}
+      transactions -> {:ok, transactions}
+    end
+  end
 end

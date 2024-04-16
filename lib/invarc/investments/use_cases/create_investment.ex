@@ -82,7 +82,8 @@ defmodule Invarc.Investments.UseCases.CreateInvestment do
         type: "outcome",
         wallet_id: wallet.id,
         investment_id: investment.id,
-        category_id: investment.category_id
+        category_id: investment.category_id,
+        account_id: wallet.account_id
       }
 
       %Transaction{}

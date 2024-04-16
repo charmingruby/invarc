@@ -9,4 +9,5 @@ defmodule Invarc.Investments do
   defdelegate create_category(params), to: UseCases.CreateCategory, as: :call
   defdelegate create_investment(params), to: UseCases.CreateInvestment, as: :call
   defdelegate withdraw_investment(params), to: UseCases.WithdrawInvestment, as: :call
+  defdelegate transactions_statement(params), to: UseCases.TransactionsStatement, as: :call
 end

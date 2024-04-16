@@ -48,13 +48,14 @@ defmodule Invarc.Factory do
 
   def transaction_factory do
     %Transaction{
-      name: "",
+      name: "not built name",
       investment_id: nil,
       category_id: nil,
       wallet_id: nil,
+      account_id: nil,
       amount: 100_000,
-      type: "",
-      status: ""
+      type: "income",
+      status: "success"
     }
   end
 end

@@ -2,6 +2,7 @@ defmodule Invarc.Investments.UseCases.WithdrawInvestment do
   @moduledoc """
   Withdraw investment use case
   """
+
   alias Ecto.Multi
   alias Invarc.Common.UseCases.Errors
 
@@ -86,7 +87,8 @@ defmodule Invarc.Investments.UseCases.WithdrawInvestment do
         type: "income",
         wallet_id: wallet.id,
         investment_id: investment.id,
-        category_id: investment.category_id
+        category_id: investment.category_id,
+        account_id: wallet.account_id
       }
 
       %Transaction{}

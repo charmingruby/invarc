@@ -1,7 +1,7 @@
 defmodule Invarc.Accounts.Models.Account do
   @moduledoc "Account model"
 
-  alias Invarc.Investments.Models.{InvestmentCategory, Wallet}
+  alias Invarc.Investments.Models.{InvestmentCategory, Transaction, Wallet}
 
   use Ecto.Schema
 
@@ -17,6 +17,7 @@ defmodule Invarc.Accounts.Models.Account do
     # relationships
     has_many :wallets, Wallet
     has_many :investment_categories, InvestmentCategory
+    has_many :transactions, Transaction
 
     timestamps()
   end

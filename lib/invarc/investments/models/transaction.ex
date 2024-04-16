@@ -1,6 +1,8 @@
 defmodule Invarc.Investments.Models.Transaction do
   @moduledoc "Transaction model"
 
+  alias Invarc.Accounts.Models.Account
+
   alias Invarc.Investments.Models.{
     Investment,
     InvestmentCategory,
@@ -20,6 +22,7 @@ defmodule Invarc.Investments.Models.Transaction do
     belongs_to :wallet, Wallet, type: :binary_id
     belongs_to :investment, Investment, type: :binary_id
     belongs_to :category, InvestmentCategory, type: :binary_id
+    belongs_to :account, Account, type: :binary_id
 
     timestamps()
   end

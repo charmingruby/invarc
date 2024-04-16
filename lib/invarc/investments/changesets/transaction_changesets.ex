@@ -7,8 +7,8 @@ defmodule Invarc.Investments.Changesets.TransactionChangesets do
 
   import Ecto.Changeset
 
-  @fields ~w(name amount status type wallet_id investment_id category_id)a
-  @required ~w(name amount status type wallet_id investment_id category_id)a
+  @fields ~w(name amount status type wallet_id investment_id category_id account_id)a
+  @required ~w(name amount status type wallet_id investment_id category_id account_id)a
 
   @valid_status ~w(success rollback failure)
   @valid_types ~w(income outcome)

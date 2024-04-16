@@ -13,6 +13,7 @@ defmodule Invarc.Repo.Migrations.CreateTransactionsTable do
       add(:wallet_id, references(:wallets, type: :uuid))
       add(:investment_id, references(:investments, type: :uuid))
       add(:category_id, references(:investment_categories, type: :uuid))
+      add(:account_id, references(:accounts, type: :uuid))
 
       timestamps()
     end
