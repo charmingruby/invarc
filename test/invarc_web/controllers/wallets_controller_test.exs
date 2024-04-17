@@ -89,4 +89,45 @@ defmodule InvarcWeb.WalletsControllerTest do
       assert result["account_id"] == account.id
     end
   end
+
+  describe "[GET] /api/wallets/:wallet_id" do
+    test "it should be able to fetch a wallet by id that the user owns", %{
+      conn: conn,
+      account: account
+    } do
+      wallet = insert(:wallet, account_id: account.id)
+
+      wallet_id = wallet.id
+      wallet_name = wallet.name
+      wallet_funds_applied = wallet.funds_applied
+      wallet_funds_received = wallet.funds_received
+      account_id = account.id
+
+      assert %{
+               "account_id" => ^account_id,
+               "funds_applied" => ^wallet_funds_applied,
+               "funds_received" => ^wallet_funds_received,
+               "id" => ^wallet_id,
+               "inserted_at" => _,
+               "name" => ^wallet_name,
+               "updated_at" => _
+             } =
+               conn
+               |> get("/api/wallets/#{wallet.id}")
+               |> json_response(200)
+    end
+
+    test "it should not be able to fetch a wallet by id that the user don't owns", %{
+      conn: conn
+    } do
+      dummy_account = insert(:account, email: "alternativedummy@email.com")
+
+      wallet = insert(:wallet, account_id: dummy_account.id)
+
+      assert %{"message" => "unauthorized", "status" => "unauthorized"} =
+               conn
+               |> get("/api/wallets/#{wallet.id}")
+               |> json_response(401)
+    end
+  end
 end
