@@ -14,4 +14,8 @@ defmodule InvarcWeb.Presenters.WalletsPresenter do
       updated_at: wallet.updated_at
     }
   end
+
+  def build_default_wallet_list(wallets) do
+    Enum.map(wallets, &build_default_wallet/1)
+  end
 end

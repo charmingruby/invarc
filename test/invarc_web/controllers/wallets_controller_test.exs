@@ -1,6 +1,7 @@
 defmodule InvarcWeb.WalletsControllerTest do
   use InvarcWeb.ConnCase, async: true
 
+  alias Invarc.Common.Pagination
   alias InvarcWeb.Security.Guardian
 
   setup ctx do
@@ -129,5 +130,64 @@ defmodule InvarcWeb.WalletsControllerTest do
                |> get("/api/wallets/#{wallet.id}")
                |> json_response(401)
     end
+  end
+
+  describe "[GET] /api/wallets" do
+    test "it should be able to fetch the wallets the user owns", %{
+      conn: conn,
+      account: account
+    } do
+      wallet_1 = insert(:wallet, account_id: account.id)
+      wallet_2 = insert(:wallet, account_id: account.id)
+
+      wallet_1_id = wallet_1.id
+      wallet_2_id = wallet_2.id
+      account_id = account.id
+
+      assert [
+               %{"account_id" => ^account_id, "id" => ^wallet_1_id},
+               %{"account_id" => ^account_id, "id" => ^wallet_2_id}
+             ] =
+               conn
+               |> get("/api/wallets")
+               |> json_response(200)
+    end
+
+    test "it should be able to fetch the wallets the user owns, even if is empty", %{
+      conn: conn
+    } do
+      assert [] =
+               conn
+               |> get("/api/wallets")
+               |> json_response(200)
+    end
+
+    test "it should be able to fetch paginated wallets the user owns", %{
+      conn: conn,
+      account: account
+    } do
+      extra_records = 2
+
+      generate_multiple_wallets(Pagination.items_per_page() + extra_records, account.id)
+
+      response =
+        conn
+        |> get("/api/wallets?page=2")
+        |> json_response(200)
+
+      transactions_quantity = length(response)
+      assert transactions_quantity == extra_records
+    end
+  end
+
+  defp generate_multiple_wallets(n, account_id)
+       when n <= 1 do
+    insert(:wallet, account_id: account_id)
+  end
+
+  defp generate_multiple_wallets(n, account_id) do
+    insert(:wallet, account_id: account_id)
+
+    generate_multiple_wallets(n - 1, account_id)
   end
 end

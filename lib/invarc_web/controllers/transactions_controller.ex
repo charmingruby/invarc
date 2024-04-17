@@ -4,7 +4,7 @@ defmodule InvarcWeb.TransactionsController do
   alias InvarcWeb.Helpers
 
   @transactions_statement_params_schema %{
-    page: [type: :integer, default: 0]
+    page: [type: :integer, default: 1]
   }
   def transactions_statement(conn, params) do
     with {:ok, casted_params} <-

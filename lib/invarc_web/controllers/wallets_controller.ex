@@ -34,15 +34,18 @@ defmodule InvarcWeb.WalletsController do
     end
   end
 
-  def transactions_statement(conn, params) do
+  @fetch_account_wallets_params_schema %{
+    page: [type: :integer, default: 1]
+  }
+  def fetch_account_wallets(conn, params) do
     with {:ok, casted_params} <-
-           Helpers.Params.cast_params(params, @transactions_statement_params_schema),
+           Helpers.Params.cast_params(params, @fetch_account_wallets_params_schema),
          {:ok, account, _claims} <- Helpers.Connection.retrieve_token_payload(conn),
          built_params = Map.put(casted_params, :account_id, account.id),
-         {:ok, transactions} <- Invarc.Investments.transactions_statement(built_params) do
+         {:ok, wallets} <- Invarc.Investments.fetch_account_wallets(built_params) do
       conn
       |> put_status(:ok)
-      |> render(:transaction_list, transactions: transactions)
+      |> render(:wallet_list, wallets: wallets)
     end
   end
 end

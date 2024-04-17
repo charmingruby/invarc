@@ -28,4 +28,13 @@ defmodule Invarc.Investments.Loaders.WalletLoaders do
       wallet -> {:ok, wallet}
     end
   end
+
+  def load_many_by_account_id(params) do
+    result =
+      params
+      |> WalletQueries.many_by_account_id()
+      |> Repo.all()
+
+    {:ok, result}
+  end
 end

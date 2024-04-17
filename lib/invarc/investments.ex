@@ -11,4 +11,5 @@ defmodule Invarc.Investments do
   defdelegate withdraw_investment(params), to: UseCases.WithdrawInvestment, as: :call
   defdelegate transactions_statement(params), to: UseCases.TransactionsStatement, as: :call
   defdelegate get_wallet_by_id(params), to: UseCases.GetWalletById, as: :call
+  defdelegate fetch_account_wallets(params), to: UseCases.FetchAccountWallets, as: :call
 end

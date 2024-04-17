@@ -23,9 +23,6 @@ defmodule Invarc.Investments.Loaders.TransactionLoaders do
       |> TransactionQueries.many_by_account_id()
       |> Repo.all()
 
-    case result do
-      nil -> {:error, :not_found}
-      transactions -> {:ok, transactions}
-    end
+    {:ok, result}
   end
 end

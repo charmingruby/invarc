@@ -3,6 +3,7 @@ defmodule Invarc.Investments.Loaders.Queries.WalletQueries do
   Module with wallet read queries
   """
 
+  alias Invarc.Common.Pagination
   alias Invarc.Investments.Models.Wallet
 
   import Ecto.Query
@@ -18,5 +19,15 @@ defmodule Invarc.Investments.Loaders.Queries.WalletQueries do
     from wlt in all(),
       where: wlt.account_id == ^account_id,
       where: wlt.name == ^name
+  end
+
+  def many_by_account_id(%{page: page, account_id: account_id}) do
+    limit = Pagination.items_per_page()
+    offset = Pagination.items_per_page() * (page - 1)
+
+    from t in all(),
+      where: t.account_id == ^account_id,
+      limit: ^limit,
+      offset: ^offset
   end
 end
