@@ -1,12 +1,19 @@
 defmodule InvarcWeb.Router do
   use InvarcWeb, :router
 
-  alias InvarcWeb.Routers.{AccountsRouter, InvestmentsRouter, SessionsRouter, WalletsRouter}
+  alias InvarcWeb.Routers.{
+    AccountsRouter,
+    InvestmentsRouter,
+    SessionsRouter,
+    TransactionsRouter,
+    WalletsRouter
+  }
 
   forward "/api/accounts", AccountsRouter
   forward "/api/sessions", SessionsRouter
   forward "/api/wallets", WalletsRouter
   forward "/api/investments", InvestmentsRouter
+  forward "/api/transactions", TransactionsRouter
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:invarc, :dev_routes) do
